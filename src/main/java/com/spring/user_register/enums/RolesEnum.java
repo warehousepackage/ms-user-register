@@ -1,2 +1,5 @@
-package com.spring.user_register.enums;public enum RolesEnum {
+package com.spring.user_register.enums;
+
+public enum RolesEnum {
+
 }
