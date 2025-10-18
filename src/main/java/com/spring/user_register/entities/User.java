@@ -4,10 +4,12 @@ import com.spring.user_register.enums.RolesEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
+@Table(name = "users")
 @Entity
 public class User {
     @Id
@@ -19,7 +21,11 @@ public class User {
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is mandatory")
     private String email;
+
+    @NotBlank(message = "Password can't be empty")
     private String password;
+    @NotNull(message = "Role can't be empty")
+    @Enumerated(EnumType.STRING)
     private RolesEnum role;
 
     public User() {}

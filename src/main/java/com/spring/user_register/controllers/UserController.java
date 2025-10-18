@@ -4,6 +4,7 @@ import com.spring.user_register.dto.ResponseDTO;
 import com.spring.user_register.dto.request.LoginRequestDTO;
 import com.spring.user_register.dto.request.RegisterRequestDTO;
 import com.spring.user_register.entities.User;
+import com.spring.user_register.enums.RolesEnum;
 import com.spring.user_register.exceptions.EmailAlreadyExistsException;
 import com.spring.user_register.exceptions.InvalidCredentialsException;
 import com.spring.user_register.exceptions.UserNotFoundException;
@@ -22,11 +23,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenService = tokenService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
@@ -48,8 +54,10 @@ public class UserController {
 
         if (user.isEmpty()){
             User newUser = new User();
+            newUser.setName(body.name());
             newUser.setEmail(body.email());
             newUser.setPassword(passwordEncoder.encode(body.password()));
+            newUser.setRole(RolesEnum.valueOf(body.role()));
             this.userRepository.save(newUser);
 
             String token = this.tokenService.generateToken(newUser);
