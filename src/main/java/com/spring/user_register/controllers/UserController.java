@@ -1,6 +1,7 @@
 package com.spring.user_register.controllers;
 
-import com.spring.user_register.dto.ResponseDTO;
+import com.spring.user_register.dto.response.RegisterResponseDTO;
+import com.spring.user_register.dto.response.LoginResponseDTO;
 import com.spring.user_register.dto.request.LoginRequestDTO;
 import com.spring.user_register.dto.request.RegisterRequestDTO;
 import com.spring.user_register.entities.User;
@@ -11,7 +12,6 @@ import com.spring.user_register.exceptions.UserNotFoundException;
 import com.spring.user_register.repository.UserRepository;
 import com.spring.user_register.security.TokenService;
 import com.spring.user_register.services.UserValidatorService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,14 +41,14 @@ public class UserController {
 
         if (passwordEncoder.matches(body.password(), user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.status(200).body(new ResponseDTO(token));
+            return ResponseEntity.status(200).body(new LoginResponseDTO(token));
         }
 
         throw new InvalidCredentialsException();
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body){
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO body){
         UserValidatorService.validateRegisterData(body);
         Optional<User> user = this.userRepository.findByEmail(body.email());
 
@@ -60,8 +60,14 @@ public class UserController {
             newUser.setRole(RolesEnum.valueOf(body.role()));
             this.userRepository.save(newUser);
 
-            String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.status(201).body(new ResponseDTO(token));
+            RegisterResponseDTO response = new RegisterResponseDTO(
+                    newUser.getName(),
+                    newUser.getEmail(),
+                    body.password(),
+                    newUser.getRole().name()
+            );
+
+            return ResponseEntity.status(201).body(response);
         }
 
         throw new EmailAlreadyExistsException();
