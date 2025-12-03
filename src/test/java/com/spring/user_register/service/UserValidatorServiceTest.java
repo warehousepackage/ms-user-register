@@ -21,7 +21,7 @@ public class UserValidatorServiceTest {
                 "Erick",
                 "email@teste.com",
                 "senha123",
-                "USER"
+                "SUPORTE"
         );
 
         assertDoesNotThrow(() -> UserValidatorService.validateRegisterData(dto));
@@ -33,10 +33,10 @@ public class UserValidatorServiceTest {
     @DisplayName("Deve lançar InvalidEmailAndPasswordException quando email e password forem nulos ou vazios")
     void validateRegisterData_ShouldThrowInvalidEmailAndPasswordException_WhenEmailAndPasswordAreEmptyOrNull() {
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 null,
                 null,
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidEmailAndPasswordException.class,
@@ -47,10 +47,10 @@ public class UserValidatorServiceTest {
     @DisplayName("Deve lançar InvalidEmailAndPasswordException quando email e password forem strings vazias")
     void validateRegisterData_ShouldThrowInvalidEmailAndPasswordException_WhenEmailAndPasswordAreBlank() {
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 "",
                 "",
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidEmailAndPasswordException.class,
@@ -63,10 +63,10 @@ public class UserValidatorServiceTest {
     @DisplayName("Deve lançar InvalidEmailException quando email for nulo")
     void validateEmail_ShouldThrowInvalidEmailException_WhenEmailIsNull() {
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 null,
                 "senha123",
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidEmailException.class,
@@ -77,10 +77,10 @@ public class UserValidatorServiceTest {
     @DisplayName("Deve lançar InvalidEmailException quando email tiver formato inválido")
     void validateEmail_ShouldThrowInvalidEmailException_WhenEmailHasInvalidFormat() {
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 "email-invalido",
                 "senha123",
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidEmailException.class,
@@ -93,10 +93,10 @@ public class UserValidatorServiceTest {
     @DisplayName("Deve lançar InvalidPasswordException quando password for nulo")
     void validatePassword_ShouldThrowInvalidPasswordException_WhenPasswordIsNull() {
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 "email@teste.com",
                 null,
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidPasswordException.class,
@@ -109,10 +109,10 @@ public class UserValidatorServiceTest {
         String longPassword = "a".repeat(50);
 
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 "email@teste.com",
                 longPassword,
-                "USER"
+                "SUPORTE"
         );
 
         assertThrows(InvalidPasswordException.class,
@@ -125,10 +125,10 @@ public class UserValidatorServiceTest {
         String password45 = "a".repeat(45);
 
         RegisterRequestDTO dto = new RegisterRequestDTO(
-                "Nome",
+                "Erick",
                 "email@teste.com",
                 password45,
-                "USER"
+                "SUPORTE"
         );
 
         assertDoesNotThrow(() -> UserValidatorService.validateRegisterData(dto));
