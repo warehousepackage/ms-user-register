@@ -11,7 +11,7 @@ import com.spring.user_register.exceptions.InvalidCredentialsException;
 import com.spring.user_register.exceptions.UserNotFoundException;
 import com.spring.user_register.repository.UserRepository;
 import com.spring.user_register.security.TokenService;
-import com.spring.user_register.services.UserValidatorService;
+import com.spring.user_register.service.UserValidatorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;

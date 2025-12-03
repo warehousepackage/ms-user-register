@@ -1,4 +1,4 @@
-package com.spring.user_register.services;
+package com.spring.user_register.service;
 
 import com.spring.user_register.dto.request.RegisterRequestDTO;
 import com.spring.user_register.exceptions.InvalidEmailAndPasswordException;
